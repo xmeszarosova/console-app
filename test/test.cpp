@@ -88,8 +88,10 @@ std::stringstream test1("Toto je zadanie.\n A nie som ista ze mam to dobre");
 std::stringstream test2("Tvorba Softverovych systemov.");
 std::stringstream test3("Tvorba Softverovych systemov.");
 
+
+
 TEST_CASE("Prebehia kontrola", "[poc]") {
-	REQUIRE(pocitadlo<Line>(test1) == 2);
-	REQUIRE(pocitadlo<char>(test2) == 27);
-	REQUIRE(pocitadlo<string>(test3) == 3);
+	REQUIRE(poc<Line>(test1) == 2);
+	REQUIRE(poc<char>(test2) == 27);
+	REQUIRE(poc<string>(test3) == 3);
 }
