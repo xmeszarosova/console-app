@@ -13,7 +13,7 @@
 
 using namespace std;
 
-enum Moznosti {
+/*enum Moznosti {
 riadky, slova, znaky
 };
 
@@ -46,20 +46,31 @@ int Scitanie(istream &is, Moznosti mode){
 	cout << "\n";
 	return 0;
 
+}*/
+template <typename T> size_t counter(std::istream&vstup) {
+	return std::distance(std::istream_iterator<T>(vstup), std::istream_iterator<T>());
+
+}
+struct Line : public std::string {};
+
+std::istream & operator >> (std::istream & stream, Line & line) {
+	std::getline(stream, line);
+	return stream;
 }
 
-int main(int argc, char **argv)
+
+
+int main(int argc, char *argv[])
 {
 	ifstream f;
 	long i;
-	Moznosti mode;
 	string text;
 	string moznost;
 	char *fname;
 	long r = 0, n = 0;
 	char buf[bsize] = { 0, };
-
-/*	std::cout << "Subor alebo vstup" << std::endl;
+/*
+	std::cout << "Subor alebo vstup" << std::endl;
 	getline(cin, moznost);
 
 
@@ -88,7 +99,7 @@ int main(int argc, char **argv)
 	return 0;*/
 
 
-	switch (argc) {
+	/*switch (argc) {
 	case 3:
 		if (argv[1][0] == '-') {
 			switch (argv[1][1]) {
@@ -119,6 +130,21 @@ int main(int argc, char **argv)
 	default:
 		std::cerr << "nespravne argumenty\n\n";
 		return -1;
-	}
+	}*/
 
+	if (argc < 2 || argc >3) return -1;
+	std::fstream fs;
+	if (argc == 3) {
+		fs.open(argv[1]);
+		if (fs.bad()) return -1;
+	}
+	std::istream &vstup = (argc == 3) ? fs : std::cin;
+	if (argv[1] == std::string("-c"))
+		std::cout << counter<char>(vstup);
+	else if (argv[1] == std::string("-w"))
+		std::cout << counter<std::string>(vstup);
+	else if (argv[1] == std::string("-l"))
+		std::cout << counter<Line>(vstup);
+	else return -1;
+	return 0;
 }
